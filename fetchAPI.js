@@ -1,6 +1,10 @@
 const quoteAuthor = document.querySelector("#quote-author")
 const quoteBody = document.querySelector("#quote-body")
 const quoteCategory = document.querySelector("#quote-category")
+const reloadBtn = document.querySelector("a").style
+
+// Hide reload button when loading
+reloadBtn.display = "none"
 
 
 // Fetch quotes
@@ -22,11 +26,19 @@ async function fetchQuote() {
 // Display quotes
 
 function displayQuote(quote) {
-    console.log(quote)
+    if(JSON.stringify(quote).length > 200) {
+        quoteAuthor.innerText = "Choosing Quote..."
 
-    quoteAuthor.innerText = `${quote[0].author}`
-    quoteBody.innerText = `${quote[0].quote}`
-    quoteCategory.innerText = `${quote[0].category}`
+        fetchQuote()
+    } else {
+        console.log(quote)
+
+        quoteAuthor.innerText = `${quote[0].author}`
+        quoteBody.innerText = `${quote[0].quote}`
+        quoteCategory.innerText = `${quote[0].category}`
+
+        reloadBtn.display = "block"
+    }
 }
 
 fetchQuote()
